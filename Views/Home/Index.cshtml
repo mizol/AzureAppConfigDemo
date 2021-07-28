@@ -7,20 +7,20 @@
 
 <style>
     body {
-        background-color: @Configuration["TestApp:Settings:BackgroundColor"]
+        background-color: @ViewData["BackgroundColor"]
     }
     h1 {
-        color: @Configuration["TestApp:Settings:FontColor"];
-        font-size: @Configuration["TestApp:Settings:FontSize"];
+        color: @ViewData["FontColor"];
+        font-size: @ViewData["FontSize"]px;
     }
 </style>
 
 <div class="text-center">
-    <h1>@Configuration["TestApp:Settings:Message"]</h1>
+    <h1>@ViewData["Message"]</h1>
 
     <p>Learn about Azure App Configuration 
-        <a href="https://docs.microsoft.com/en-us/azure/azure-app-configuration/quickstart-aspnet-core-app?tabs=core3x">
-        Quickstart: Create an ASP.NET Core app with Azure App Configuration
+        <a href="https://docs.microsoft.com/en-us/azure/azure-app-configuration/enable-dynamic-configuration-aspnet-core?tabs=core3x">
+            Tutorial: Use dynamic configuration in an ASP.NET Core app
         </a>
     </p>
 </div>

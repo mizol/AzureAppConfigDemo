@@ -12,17 +12,22 @@ namespace AzureAppConfigDemo
 {
     public class Startup
     {
+        public IConfiguration Configuration { get; }
+
         public Startup(IConfiguration configuration)
         {
             Configuration = configuration;
         }
 
-        public IConfiguration Configuration { get; }
-
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
+            services.Configure<Settings>(Configuration.GetSection("TestApp:Settings"));
             services.AddControllersWithViews();
+            services.AddAzureAppConfiguration();
+
+            // Initial ver
+            //services.AddControllersWithViews();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -36,6 +41,11 @@ namespace AzureAppConfigDemo
             {
                 app.UseExceptionHandler("/Home/Error");
             }
+
+            // The App Configuration middleware monitors the sentinel key or any other keys you registered
+            // for refreshing in the Program config.AddAzureAppConfiguration( options.ConfigureRefresh call)
+            app.UseAzureAppConfiguration();
+
             app.UseStaticFiles();
 
             app.UseRouting();
