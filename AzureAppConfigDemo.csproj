@@ -4,4 +4,7 @@
     <TargetFramework>netcoreapp3.1</TargetFramework>
     <UserSecretsId>0fffd8d6-a346-469a-bca3-de1800f8c34e</UserSecretsId>
   </PropertyGroup>
+  <ItemGroup>
+    <PackageReference Include="Microsoft.Azure.AppConfiguration.AspNetCore" Version="4.4.0" />
+  </ItemGroup>
 </Project>
