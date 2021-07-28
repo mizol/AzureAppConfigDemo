@@ -1,6 +1,7 @@
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.Hosting;
+using System;
 
 namespace AzureAppConfigDemo
 {
@@ -20,7 +21,19 @@ namespace AzureAppConfigDemo
                         // ConnectionString "Endpoint=https://app-config-provider-demo.azconfig.io;Id=..."
                         // Stored locally in app secret.json and not versioned
                         var connection = settings.GetConnectionString("AppConfig");
-                        config.AddAzureAppConfiguration(connection);
+                        //var connection = settings["ConnectionStrings:AppConfig"];
+
+                        config.AddAzureAppConfiguration(options => {
+                            options.Connect(connection);
+
+                            options.ConfigureRefresh(refresh =>
+                            {
+                                refresh.Register("TestApp:Settings:Sentinel", refreshAll: true);
+                                refresh.SetCacheExpiration(new TimeSpan(0, 5, 0));
+                            });
+                        });
+
+
                     });
 
                     webBuilder.UseStartup<Startup>();
